@@ -4,14 +4,17 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /MotionPlanning1/Planned Path1
-        - /TF1
-        - /TF1/Status1
+        - /Global Options1
+        - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
         - /TF1/Tree1
+        - /Image1
+        - /Image1/Status1
         - /PointCloud21/Status1
+        - /PointCloud22
+        - /HandEyeCalibration1
       Splitter Ratio: 0.4061032831668854
-    Tree Height: 1332
+    Tree Height: 213
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -344,19 +347,21 @@ Visualization Manager:
       Velocity_Scaling_Factor: 0.1
     - Class: rviz/TF
       Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        camera_color_frame:
-          Value: false
-        camera_color_optical_frame:
+        camera_base:
           Value: true
-        camera_depth_frame:
+        camera_body:
           Value: true
-        camera_depth_optical_frame:
+        camera_visor:
           Value: true
-        camera_link:
-          Value: false
+        depth_camera_link:
+          Value: true
+        imu_link:
+          Value: true
         panda_EE:
           Value: false
         panda_K:
@@ -365,30 +370,52 @@ Visualization Manager:
           Value: false
         panda_hand:
           Value: true
+        panda_hand_sc:
+          Value: true
         panda_hand_tcp:
           Value: false
         panda_leftfinger:
           Value: false
         panda_link0:
           Value: true
+        panda_link0_sc:
+          Value: true
         panda_link1:
           Value: false
+        panda_link1_sc:
+          Value: true
         panda_link2:
           Value: false
+        panda_link2_sc:
+          Value: true
         panda_link3:
           Value: false
+        panda_link3_sc:
+          Value: true
         panda_link4:
           Value: false
+        panda_link4_sc:
+          Value: true
         panda_link5:
           Value: false
+        panda_link5_sc:
+          Value: true
         panda_link6:
           Value: false
+        panda_link6_sc:
+          Value: true
         panda_link7:
           Value: false
+        panda_link7_sc:
+          Value: true
         panda_link8:
           Value: false
         panda_rightfinger:
           Value: false
+        rgb_camera_link:
+          Value: true
+        tag_0:
+          Value: true
         world:
           Value: false
       Marker Alpha: 0.8999999761581421
@@ -396,24 +423,48 @@ Visualization Manager:
       Name: TF
       Show Arrows: true
       Show Axes: true
-      Show Names: true
+      Show Names: false
       Tree:
+        camera_base:
+          camera_body:
+            {}
+          camera_visor:
+            {}
+          depth_camera_link:
+            imu_link:
+              {}
         world:
           panda_link0:
+            panda_link0_sc:
+              {}
             panda_link1:
+              panda_link1_sc:
+                {}
               panda_link2:
+                panda_link2_sc:
+                  {}
                 panda_link3:
+                  panda_link3_sc:
+                    {}
                   panda_link4:
+                    panda_link4_sc:
+                      {}
                     panda_link5:
+                      panda_link5_sc:
+                        {}
                       panda_link6:
+                        panda_link6_sc:
+                          {}
                         panda_link7:
+                          panda_link7_sc:
+                            {}
                           panda_link8:
                             panda_NE:
                               panda_EE:
                                 panda_K:
                                   {}
                             panda_hand:
-                              camera_color_optical_frame:
+                              panda_hand_sc:
                                 {}
                               panda_hand_tcp:
                                 {}
@@ -421,6 +472,9 @@ Visualization Manager:
                                 {}
                               panda_rightfinger:
                                 {}
+            rgb_camera_link:
+              tag_0:
+                {}
       Update Interval: 0
       Value: true
     - Class: rviz/MarkerArray
@@ -428,12 +482,17 @@ Visualization Manager:
       Marker Topic: /rviz_visual_tools
       Name: MarkerArray
       Namespaces:
-        {}
+        Text: true
+        fov: true
+        panda_hand: true
+        panda_link0: true
+        rgb_camera_link: true
+        tag_0: true
       Queue Size: 100
       Value: true
     - Class: rviz/Image
-      Enabled: false
-      Image Topic: /camera/color/image_raw
+      Enabled: true
+      Image Topic: /tag_detections_image
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -442,7 +501,7 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -453,14 +512,14 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: ""
+      Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
       Name: PointCloud2
-      Position Transformer: ""
+      Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
@@ -471,11 +530,151 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic: /quality
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /grasp
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic: /tsdf
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /workspace
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - ArUco dictionary: DICT_5X5_250
+      Camera FOV Marker:
+        Marker Alpha: 0.30000001192092896
+        Marker Size: 1.5
+        Value: true
+      Class: moveit_rviz_plugin/HandEyeCalibration
+      Enabled: true
+      Move Group Namespace: ""
+      Name: HandEyeCalibration
+      Planning Scene Topic: move_group/monitored_planning_scene
+      Rx: 1.6791
+      Ry: 0.2267
+      Rz: -3.1349
+      Tx: 0.2342
+      Ty: 0.8615
+      Tz: 0.5332
+      Value: true
+      base: panda_link0
+      camera_info_topic: /rgb/camera_info
+      eef: panda_hand
+      group: panda_arm
+      image_topic: /rgb/image_raw
+      marker border (bits): 1
+      marker separation (px): 20
+      marker size (px): 200
+      markers, X: 3
+      markers, Y: 4
+      measured marker size (m): 0.200000
+      measured separation (m): 0.020000
+      object: ""
+      sensor: rgb_camera_link
+      sensor_mount_type: 0
+      solver: crigroup/Daniilidis1999
+      target_type: HandEyeTarget/Aruco
+    - ArUco dictionary: DICT_5X5_250
+      Camera FOV Marker:
+        Marker Alpha: 0.30000001192092896
+        Marker Size: 1.5
+        Value: true
+      Class: moveit_rviz_plugin/HandEyeCalibration
+      Enabled: true
+      Move Group Namespace: ""
+      Name: HandEyeCalibration
+      Planning Scene Topic: move_group/monitored_planning_scene
+      Rx: 2.1506
+      Ry: 2.3019
+      Rz: 2.5984
+      Tx: -0.1099
+      Ty: -0.5525
+      Tz: 0.1173
+      Value: true
+      base: panda_link0
+      camera_info_topic: /rgb/camera_info
+      eef: panda_hand
+      group: panda_arm
+      image_topic: /rgb/image_raw
+      marker border (bits): 1
+      marker separation (px): 20
+      marker size (px): 200
+      markers, X: 3
+      markers, Y: 4
+      measured marker size (m): 0.200000
+      measured separation (m): 0.020000
+      object: tag_0
+      sensor: rgb_camera_link
+      sensor_mount_type: 0
+      solver: crigroup/Daniilidis1999
+      target_type: HandEyeTarget/Aruco
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: panda_link0
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -487,7 +686,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.7881036400794983
+      Distance: 4.6600260734558105
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -495,22 +694,24 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.15142247080802917
-        Y: -0.11155001074075699
-        Z: 0.36370864510536194
+        X: 0.26873958110809326
+        Y: 0.20834214985370636
+        Z: 0.41762760281562805
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.32539939880371094
+      Pitch: 0.19979682564735413
       Target Frame: panda_link0
-      Yaw: 5.938532829284668
+      Yaw: 5.20851469039917
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1483
+  HandEye Calibration:
+    collapsed: false
+  Height: 1048
   Help:
     collapsed: false
   Hide Left Dock: false
@@ -521,9 +722,9 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000002000000000000035600000571fc0200000008fb000000100044006900730070006c006100790073010000003d00000571000000c900fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a00560069006500770073000000010c000000a4000000a400fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100fffffffb0000002600480061006e0064004500790065002000430061006c006900620072006100740069006f006e00000001b2000002910000000000000000fb0000000a0049006d0061006700650000000302000002ac0000001600ffffff00000002000006a400000188fc0100000001fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000035c000006a4000001f300ffffff000006a4000003e300000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000200000000000002b7000003c3fc0200000009fb000000100044006900730070006c00610079007301000000380000010f000000be00fffffffb0000000800480065006c00700000000342000000bb0000006800fffffffb0000000a00560069006500770073000000010c000000a40000009d00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000003e00fffffffb0000002600480061006e0064004500790065002000430061006c006900620072006100740069006f006e00000001b200000291000001e100fffffffb0000002600480061006e0064004500790065002000430061006c006900620072006100740069006f006e010000014c000002af000001e100fffffffb0000002600480061006e0064004500790065002000430061006c006900620072006100740069006f006e010000021b000001e1000000000000000000000002000004c4000001d1fc0100000001fc000002bc000004c4000001d200fffffffa000000000200000002fb0000000a0049006d0061006700650100000000ffffffff0000001600fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000035000001880000016f00ffffff000004c4000001ed00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 2560
-  X: 0
-  Y: 28
+  Width: 1920
+  X: 2560
+  Y: 0

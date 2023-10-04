@@ -1,0 +1,14 @@
+<launch>
+
+    <!-- 启动摄像头和降采样操作 roslaunch azure_kinect_ros_driver test.launch   -->
+    <include file="$(find realsense2_camera)/launch/test.launch" />
+    <!-- 启动标定程序发布 -->
+    <include file="$(find panda_moveit_config)/calibrate_launch/panda_realsense_tf_calibrate.launch" />
+
+    <!-- 启动机械臂点云滤除程序  roslaunch robot_body_filter body_filter_node.launch  -->
+    <include file="$(find robot_body_filter)/examples/body_filter_node.launch" />
+
+
+     <!-- Launch RViz with the specified configuration file 专为过滤机械臂点云定制的rviz-->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find panda_moveit_config)/calibrate_launch/robot_filter.rviz"/>
+</launch>

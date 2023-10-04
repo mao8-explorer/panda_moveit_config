@@ -1,0 +1,27 @@
+<launch>
+  <!-- The rpy in the comment uses the extrinsic XYZ convention, which is the same as is used in a URDF. See
+       http://wiki.ros.org/geometry2/RotationMethods and https://en.wikipedia.org/wiki/Euler_angles for more info. -->
+  <!-- xyz="0.234171 0.86167 0.533419" rpy="1.67911 0.227125 -3.13495" -->
+
+  <!-- 通过标定获取的是rgb_camera_link相对与panda_link0的坐标关系，这样加入以后，会导致tf树连接不完全； 
+          通过rosrun tf tf_echo rgb_camera_link panda_link0 获取逆解的方式，将机械臂的根节点world作为camera_base的子节点，
+           连接在camera_base的子节点rgb_camera_link下，实现tf树的连接完全 -->
+           
+  <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="camera_link_broadcaster"
+      args="0.234171 0.86167 0.533419   -0.0732166 0.739799 -0.663209 0.0865513 panda_link0 rgb_camera_link" /> -->
+
+<!-- 摄像头启动：kinect roslaunch azure_kinect_ros_driver driver.origin.launch  -->
+<!-- 机械臂启动：NUC roslaunch franka_motion_control gravity_mode.launch 纯纯只要joint_state_publisher就行 谁能实现谁都可以 -->
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="camera_link_broadcaster"
+      args=" -0.454 0.171 0.324     0.521 -0.214 0.458 0.688 rgb_camera_link world" />
+  <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="camera_link_broadcaster"
+      args="0.428  0.444, 0.843   -0.059166 0.743353 -0.662107 0.0744326 rgb_camera_link world" /> -->
+
+
+  <!-- Launch RViz with the specified configuration file 专为标定定制的rviz-->
+  <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find panda_moveit_config)/calibrate_launch/panda_camera_tf.rviz"/> -->
+
+</launch>
+
+
